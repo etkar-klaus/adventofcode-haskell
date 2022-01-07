@@ -1,7 +1,9 @@
 module Kit (executeSolver, runWithArgs) where
 
 import Control.Exception (try)
+import Control.StopWatch (stopWatch)
 import Puzzles (Day (..), Part (..), solversForDay)
+import System.Clock (TimeSpec (nsec, sec))
 import Text.Printf (printf)
 import Text.Read (readEither)
 
@@ -13,9 +15,13 @@ runWithArgs args =
     >>= out
 
 executeSolver :: Day -> Part -> Maybe Int -> IO (Either String Integer)
-executeSolver d p ex =
-  either (Left . show) (Right . solver d p . lines)
-    <$> (try $ readFile ("data/" ++ file d ex ++ ".txt") :: IO (Either IOError String))
+executeSolver d p ex = do
+  content <- try $ readFile ("data/" ++ file d ex ++ ".txt") :: IO (Either IOError String)
+  res <- stopWatch $ return $ either (Left . show) (Right . (solver d p . lines)) content
+  putStrLn $
+    let (_, time) = res
+     in printf "%s %s %s: %d.%06d sec" (show d) (show p) (show ex) (sec time) (nsec time `div` 1000)
+  return $ fst res
 
 solver :: Day -> Part -> [String] -> Integer
 solver d Part1 = fst $ solversForDay d
@@ -66,4 +72,4 @@ file :: Day -> Maybe Int -> String
 file d ex = printf "day%02d" (fromEnum d + 1) ++ maybe "" (printf "example%d") ex
 
 out :: Either String Integer -> IO ()
-out = either print print . prefixError "Error"
+out = either putStrLn print . prefixError "Error"
