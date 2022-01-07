@@ -41,16 +41,14 @@ move state =
 memoizedMove :: State -> Wins
 memoizedMove state =
   fromMaybe (error "not found") $
-    lookup
-      state
-      ( fromList $
-          [ let s = State (Player p1 s1) (Player p2 s2) in (s, move s)
-            | p1 <- [1 .. 10],
-              p2 <- [1 .. 10],
-              s1 <- [0 .. maxScore],
-              s2 <- [0 .. maxScore]
-          ]
-      )
+    lookup state $
+      fromList
+        [ let s = State (Player p1 s1) (Player p2 s2) in (s, move s)
+          | p1 <- [1 .. 10],
+            p2 <- [1 .. 10],
+            s1 <- [0 .. maxScore],
+            s2 <- [0 .. maxScore]
+        ]
 
 swap :: Wins -> Wins
 swap (Wins win1 win2) = Wins win2 win1
