@@ -26,6 +26,10 @@ main = do
           "Day 03"
             ~: [ "Part 1" ~: testPuzzle Day03 Part1 [4191876, 198],
                  "Part 2" ~: testPuzzle Day03 Part2 [3414905, 230]
+               ],
+          "Day 21"
+            ~: [ "Part 1" ~: testPuzzle Day21 Part1 [893700, 739785],
+                 "Part 2" ~: testPuzzle Day21 Part2 [568867175661958, 444356092776315]
                ]
         ]
   when (failures res > 0 || errors res > 0) exitFailure
