@@ -1,67 +1,73 @@
-cabal-version:        2.4
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.34.6.
+--
+-- see: https://github.com/sol/hpack
+
 name:                 adventofcode-haskell
-version:              0.1.0.0
+version:              0.1
+synopsis:             Advent Of Code solutions
+description:          See README at <https://github.com/etkar-klaus/adventofcode-haskell#readme>
+category:             Coding contest
+homepage:             https://github.com/etkar-klaus/adventofcode-haskell#readme
+bug-reports:          https://github.com/etkar-klaus/adventofcode-haskell/issues
+maintainer:           Daniel Beer <etkar.klaus@googlemail.com>
+build-type:           Simple
+extra-source-files:
+    CHANGELOG.md
 
--- A short (one-line) description of the package.
--- synopsis:
-
--- A longer description of the package.
--- description:
-
--- A URL where users can report bugs.
--- bug-reports:
-
--- The license under which the package is released.
--- license:
-author:               daniel.beer
-maintainer:           etkar.klaus@googlemail.com
-
--- A copyright notice.
--- copyright:
--- category:
-extra-source-files:   CHANGELOG.md
+source-repository head
+    type: git
+    location: https://github.com/etkar-klaus/adventofcode-haskell
 
 executable adventofcode
-    ghc-options: 
-        -Wall
-
-    main-is:          Main.hs
-
-    -- Modules included in this executable, other than Main.
+    main-is: Main.hs
     other-modules:
+        Day01.Common
+        Day01.Part1
+        Day01.Part2
+        Day02.Common
+        Day02.Part1
+        Day02.Part2
+        Day03.Part1
+        Day03.Part2
+        Day21.Part1
+        Day21.Part2
         Kit
         Puzzles
-        Day01.Common
-        Day01.Part2
-        Day01.Part1
-        Day03.Part2
-        Day03.Part1
-        Day02.Common
-        Day02.Part2
-        Day02.Part1
-
-    -- LANGUAGE extensions used by modules in this package.
-    -- other-extensions:
-    hs-source-dirs:   src
-    build-depends:    base ^>=4.14.3.0
+    hs-source-dirs:
+        src
+    ghc-options: -Wall
+    build-depends:
+        base >=4.14.3.0 && <4.15,
+        clock,
+        stopwatch
     default-language: Haskell2010
 
-Test-Suite test-adventofcode
-    ghc-options: 
-        -Wall
-    type:             exitcode-stdio-1.0
-    main-is:          Test.hs
+test-suite spec
+    type: exitcode-stdio-1.0
+    main-is: Test.hs
     other-modules:
+        Day01.Common
+        Day01.Part1
+        Day01.Part2
+        Day02.Common
+        Day02.Part1
+        Day02.Part2
+        Day03.Part1
+        Day03.Part2
+        Day21.Part1
+        Day21.Part2
         Kit
         Puzzles
-        Day01.Common
-        Day01.Part2
-        Day01.Part1
-        Day03.Part2
-        Day03.Part1
-        Day02.Common
-        Day02.Part2
-        Day02.Part1
-    hs-source-dirs:   test, src
-    build-depends:    base ^>=4.14.3.0, HUnit
+    hs-source-dirs:
+        test
+        src
+    ghc-options: -Wall
+    cpp-options: -DTEST
+    build-depends:
+        HUnit >=1.6.0.0,
+        base >=4.14.3.0 && <4.15,
+        clock,
+        stopwatch
     default-language: Haskell2010

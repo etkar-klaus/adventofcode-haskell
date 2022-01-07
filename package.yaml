@@ -1,0 +1,39 @@
+name: adventofcode-haskell
+version: 0.1
+synopsis: Advent Of Code solutions
+description: See README at <https://github.com/etkar-klaus/adventofcode-haskell#readme>
+maintainer: Daniel Beer <etkar.klaus@googlemail.com>
+github: etkar-klaus/adventofcode-haskell
+category: "Coding contest"
+extra-source-files:
+  - CHANGELOG.md
+
+ghc-options: -Wall
+
+dependencies:
+  - base ^>=4.14.3.0
+  - clock
+  - stopwatch
+
+executables:
+  adventofcode:
+    main: Main.hs
+    source-dirs: src
+    when:
+      - condition: false
+        other-modules: Paths_adventofcode_haskell
+
+tests:
+  spec:
+    cpp-options: -DTEST
+    main: Test.hs
+    source-dirs:
+      - test
+      - src
+    dependencies:
+      - HUnit >= 1.6.0.0
+    when:
+      - condition: false
+        other-modules:
+          - Paths_adventofcode_haskell
+          - Main
