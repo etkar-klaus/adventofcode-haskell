@@ -1,9 +1,9 @@
 module Kit (executeSolver, runWithArgs) where
 
+import Control.DeepSeq (deepseq)
 import Control.Exception (try)
-import Control.StopWatch (stopWatch)
 import Puzzles (Day (..), Part (..), solversForDay)
-import System.Clock (TimeSpec (nsec, sec))
+import System.CPUTime (getCPUTime)
 import Text.Printf (printf)
 import Text.Read (readEither)
 
@@ -17,11 +17,13 @@ runWithArgs args =
 executeSolver :: Day -> Part -> Maybe Int -> IO (Either String Integer)
 executeSolver d p ex = do
   content <- try $ readFile ("data/" ++ file d ex ++ ".txt") :: IO (Either IOError String)
-  res <- stopWatch $ return $ either (Left . show) (Right . (solver d p . lines)) content
+  start <- getCPUTime
+  let res = either (Left . show) (Right . (solver d p . lines)) content
+  end <- res `deepseq` getCPUTime
   putStrLn $
-    let (_, time) = res
-     in printf "%s %s %s: %d.%06d sec" (show d) (show p) (show ex) (sec time) (nsec time `div` 1000)
-  return $ fst res
+    let time = end - start
+     in printf "%s %s %s: %d.%06d sec" (show d) (show p) (show ex) (time `div` 1000000000000) ((time `div` 1000000) `mod` 1000000)
+  return res
 
 solver :: Day -> Part -> [String] -> Integer
 solver d Part1 = fst $ solversForDay d

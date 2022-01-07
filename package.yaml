@@ -12,8 +12,8 @@ ghc-options: -Wall
 
 dependencies:
   - base ^>=4.14.3.0
-  - clock
-  - stopwatch
+  - deepseq
+  - containers
 
 executables:
   adventofcode:

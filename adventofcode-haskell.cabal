@@ -40,8 +40,8 @@ executable adventofcode
     ghc-options: -Wall
     build-depends:
         base >=4.14.3.0 && <4.15,
-        clock,
-        stopwatch
+        containers,
+        deepseq
     default-language: Haskell2010
 
 test-suite spec
@@ -68,6 +68,6 @@ test-suite spec
     build-depends:
         HUnit >=1.6.0.0,
         base >=4.14.3.0 && <4.15,
-        clock,
-        stopwatch
+        containers,
+        deepseq
     default-language: Haskell2010
