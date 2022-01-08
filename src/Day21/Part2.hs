@@ -23,7 +23,7 @@ memoizedCountWins :: State -> Wins
 memoizedCountWins = memoizedCountWinsMap -- choose from: memoizedCountWinsMap, memoizedCountWinsList, memoizedCountWinsVector
 
 countWins :: State -> Wins
-countWins = countWinsCombined -- chose from: countWinsNaive, countWinsCombined
+countWins = countWinsCombined -- choose from: countWinsNaive, countWinsCombined
 
 solve :: [String] -> Integer
 solve = result . memoizedCountWins . initState . map parse
@@ -45,7 +45,7 @@ roll (State (Player pos score) player2) die =
 
 -- | Naive implementation for counting wins.
 -- Create all 27 possible outcomes of rolling 3 dice with 3 sides each.
--- This is considerably slower than countWins.
+-- This is considerably slower than countWinsCombined.
 countWinsNaive :: State -> Wins
 countWinsNaive state =
   foldl' add (Wins 0 0) [roll state (a + b + c) | a <- [1 .. 3], b <- [1 .. 3], c <- [1 .. 3]]
