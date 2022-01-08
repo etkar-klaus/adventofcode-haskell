@@ -11,9 +11,11 @@ extra-source-files:
 ghc-options: -Wall
 
 dependencies:
-  - base ^>=4.14.3.0
+  - base >= 4.14
   - deepseq
   - containers
+  - array
+  - vector
 
 executables:
   adventofcode:
@@ -31,7 +33,7 @@ tests:
       - test
       - src
     dependencies:
-      - HUnit >= 1.6.0.0
+      - HUnit >= 1.6
     when:
       - condition: false
         other-modules:

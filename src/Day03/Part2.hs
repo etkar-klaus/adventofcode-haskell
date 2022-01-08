@@ -1,6 +1,7 @@
 module Day03.Part2 (solve) where
 
 import Data.Bifunctor (first)
+import Data.Foldable (foldl')
 import Data.List (maximumBy, minimumBy, partition)
 import Data.Ord (comparing)
 import GHC.Base (Applicative (liftA2))
@@ -14,7 +15,7 @@ rating :: Bool -> [([Bit], [Bit])] -> Integer
 rating = (bitsToInt .) . findRow
 
 bitsToInt :: [Bit] -> Integer
-bitsToInt = toInteger . foldl (\r v -> r * 2 + fromEnum v) 0
+bitsToInt = toInteger . foldl' (\r v -> r * 2 + fromEnum v) 0
 
 parse :: String -> [Bit]
 parse = map $ toEnum . fromEnum . (== '1')

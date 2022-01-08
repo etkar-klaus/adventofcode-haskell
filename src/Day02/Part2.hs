@@ -1,9 +1,10 @@
 module Day02.Part2 (solve) where
 
+import Data.Foldable (Foldable (foldl'))
 import Day02.Common (Command (..), parse)
 
 solve :: [String] -> Integer
-solve input = prod $ foldl exec (0, 0, 0) $ parse input
+solve input = prod $ foldl' exec (0, 0, 0) $ parse input
 
 exec :: (Int, Int, Int) -> Command -> (Int, Int, Int)
 exec (pos, depth, aim) (Forward value) = (pos + value, depth + aim * value, aim)

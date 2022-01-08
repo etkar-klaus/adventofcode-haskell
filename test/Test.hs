@@ -14,6 +14,7 @@ main :: IO Counts
 main = do
   res <-
     runTestTT $
+      -- test $ replicate 3 $
       test
         [ "Day 01"
             ~: [ "Part 1" ~: testPuzzle Day01 Part1 [1451, 7],
@@ -28,9 +29,9 @@ main = do
                  "Part 2" ~: testPuzzle Day03 Part2 [3414905, 230]
                ],
           "Day 21"
-            ~: [ "Part 1" ~: testPuzzle Day21 Part1 [893700, 739785],
-                 "Part 2" ~: testPuzzle Day21 Part2 [568867175661958, 444356092776315]
-               ]
+            ~: ["Part 1" ~: testPuzzle Day21 Part1 [893700, 739785]]
+              -- repeated test execution to show timing effects
+              ++ replicate 3 ("Part 2a" ~: testPuzzle Day21 Part2 [568867175661958, 444356092776315])
         ]
   when (failures res > 0 || errors res > 0) exitFailure
   return res
