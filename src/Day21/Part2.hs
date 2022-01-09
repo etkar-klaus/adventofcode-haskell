@@ -1,13 +1,10 @@
-{-# OPTIONS_GHC -Wno-unused-top-binds #-}
-
 module Day21.Part2 (solve) where
 
-import qualified Data.Array.Comfort.Boxed as Arr (fromList, (!))
-import qualified Data.Array.Comfort.Shape as Sh (ZeroBased (..))
+import qualified Data.Array as Arr
+import qualified Data.Array.Comfort.Boxed as CArr
 import Data.Foldable (Foldable (foldl'))
-import qualified Data.Map as Map (fromList, lookup)
-import Data.Maybe (fromMaybe)
-import qualified Data.Vector as Vec (fromList, (!))
+import qualified Data.Map as Map
+import qualified Data.Vector as Vec
 import Prelude hiding (lookup)
 
 data Wins = Wins Integer Integer
@@ -22,10 +19,19 @@ maxScore :: Int
 maxScore = 21
 
 memoizedCountWins :: State -> Wins
-memoizedCountWins = memoizedCountWinsArray -- choose from: memoizedCountWinsArray, memoizedCountWinsMap, memoizedCountWinsList, memoizedCountWinsVector
+memoizedCountWins = case toInteger (5 :: Int) of
+  1 -> memoizedCountWinsMap
+  2 -> memoizedCountWinsList
+  3 -> memoizedCountWinsVector
+  4 -> memoizedCountWinsCArray
+  5 -> memoizedCountWinsArray
+  _ -> error "invalid case"
 
 countWins :: State -> Wins
-countWins = countWinsCombined -- choose from: countWinsNaive, countWinsCombined
+countWins = case toInteger (1 :: Int) of
+  1 -> countWinsCombined
+  2 -> countWinsNaive
+  _ -> error "invalid case"
 
 solve :: [String] -> Integer
 solve = result . memoizedCountWins . initState . map parse
@@ -62,53 +68,39 @@ countWinsCombined state =
 
 -- | Memoization using Data.Map
 memoizedCountWinsMap :: State -> Wins
-memoizedCountWinsMap state =
-  fromMaybe (error "not found") $
-    Map.lookup state $
-      Map.fromList
-        [ (s, countWins s)
-          | p1 <- [1 .. 10],
-            p2 <- [1 .. 10],
-            s1 <- [0 .. maxScore - 1],
-            s2 <- [0 .. maxScore - 1],
-            let s = State (Player p1 s1) (Player p2 s2)
-        ]
+memoizedCountWinsMap =
+  (Map.!) $ Map.fromList (allStates (\s -> (s, countWins s)))
 
 -- | Memoization using an ordinary list with index access.
 memoizedCountWinsList :: State -> Wins
-memoizedCountWinsList state =
-  [ countWins $ State (Player p1 s1) (Player p2 s2)
-    | p1 <- [1 .. 10],
-      p2 <- [1 .. 10],
-      s1 <- [0 .. maxScore - 1],
-      s2 <- [0 .. maxScore - 1]
-  ]
-    !! index state
+memoizedCountWinsList =
+  (!!) (allStates countWins) . index
 
 -- | Memoization using Data.Vector with index access.
 memoizedCountWinsVector :: State -> Wins
-memoizedCountWinsVector state =
-  Vec.fromList
-    [ countWins $ State (Player p1 s1) (Player p2 s2)
-      | p1 <- [1 .. 10],
-        p2 <- [1 .. 10],
-        s1 <- [0 .. maxScore - 1],
-        s2 <- [0 .. maxScore - 1]
-    ]
-    Vec.! index state
+memoizedCountWinsVector =
+  (Vec.!) (Vec.fromList $ allStates countWins) . index
 
 -- | Memoization using Data.Array.Comfort.Boxed with index access.
+memoizedCountWinsCArray :: State -> Wins
+memoizedCountWinsCArray =
+  (CArr.!) (CArr.vectorFromList $ allStates countWins) . index
+
+-- | Memoization using Data.Array with index access.
 memoizedCountWinsArray :: State -> Wins
-memoizedCountWinsArray state =
-  Arr.fromList
-    (Sh.ZeroBased (10 * 10 * maxScore * maxScore))
-    [ countWins $ State (Player p1 s1) (Player p2 s2)
+memoizedCountWinsArray =
+  (Arr.!) (Arr.listArray (0, 10 * 10 * maxScore * maxScore - 1) $ allStates countWins) . index
+
+allStates :: (State -> a) -> [a]
+allStates =
+  flip
+    map
+    [ State (Player p1 s1) (Player p2 s2)
       | p1 <- [1 .. 10],
         p2 <- [1 .. 10],
         s1 <- [0 .. maxScore - 1],
         s2 <- [0 .. maxScore - 1]
     ]
-    Arr.! index state
 
 -- | Create an index for lookup in linear memoization data structures.
 index :: State -> Int
