@@ -41,6 +41,7 @@ executable adventofcode
     build-depends:
         array,
         base >=4.14,
+        comfort-array,
         containers,
         deepseq,
         vector
@@ -71,6 +72,7 @@ test-suite spec
         HUnit >=1.6,
         array,
         base >=4.14,
+        comfort-array,
         containers,
         deepseq,
         vector

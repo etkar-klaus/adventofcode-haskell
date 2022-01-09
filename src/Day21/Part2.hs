@@ -2,6 +2,8 @@
 
 module Day21.Part2 (solve) where
 
+import qualified Data.Array.Comfort.Boxed as Arr (fromList, (!))
+import qualified Data.Array.Comfort.Shape as Sh (ZeroBased (..))
 import Data.Foldable (Foldable (foldl'))
 import qualified Data.Map as Map (fromList, lookup)
 import Data.Maybe (fromMaybe)
@@ -20,7 +22,7 @@ maxScore :: Int
 maxScore = 21
 
 memoizedCountWins :: State -> Wins
-memoizedCountWins = memoizedCountWinsMap -- choose from: memoizedCountWinsMap, memoizedCountWinsList, memoizedCountWinsVector
+memoizedCountWins = memoizedCountWinsArray -- choose from: memoizedCountWinsArray, memoizedCountWinsMap, memoizedCountWinsList, memoizedCountWinsVector
 
 countWins :: State -> Wins
 countWins = countWinsCombined -- choose from: countWinsNaive, countWinsCombined
@@ -94,6 +96,19 @@ memoizedCountWinsVector state =
         s2 <- [0 .. maxScore - 1]
     ]
     Vec.! index state
+
+-- | Memoization using Data.Array.Comfort.Boxed with index access.
+memoizedCountWinsArray :: State -> Wins
+memoizedCountWinsArray state =
+  Arr.fromList
+    (Sh.ZeroBased (10 * 10 * maxScore * maxScore))
+    [ countWins $ State (Player p1 s1) (Player p2 s2)
+      | p1 <- [1 .. 10],
+        p2 <- [1 .. 10],
+        s1 <- [0 .. maxScore - 1],
+        s2 <- [0 .. maxScore - 1]
+    ]
+    Arr.! index state
 
 -- | Create an index for lookup in linear memoization data structures.
 index :: State -> Int

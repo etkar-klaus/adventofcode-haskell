@@ -15,6 +15,7 @@ dependencies:
   - deepseq
   - containers
   - array
+  - comfort-array
   - vector
 
 executables:
