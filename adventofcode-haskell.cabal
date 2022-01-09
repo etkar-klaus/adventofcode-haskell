@@ -33,6 +33,9 @@ executable adventofcode
         Day03.Part2
         Day21.Part1
         Day21.Part2
+        Day22.Common
+        Day22.Part1
+        Day22.Part2
         Kit
         Puzzles
     hs-source-dirs:
@@ -44,6 +47,7 @@ executable adventofcode
         comfort-array,
         containers,
         deepseq,
+        regex-posix,
         vector
     default-language: Haskell2010
 
@@ -61,6 +65,9 @@ test-suite spec
         Day03.Part2
         Day21.Part1
         Day21.Part2
+        Day22.Common
+        Day22.Part1
+        Day22.Part2
         Kit
         Puzzles
     hs-source-dirs:
@@ -75,5 +82,6 @@ test-suite spec
         comfort-array,
         containers,
         deepseq,
+        regex-posix,
         vector
     default-language: Haskell2010

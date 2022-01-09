@@ -17,6 +17,7 @@ dependencies:
   - array
   - comfort-array
   - vector
+  - regex-posix
 
 executables:
   adventofcode:
