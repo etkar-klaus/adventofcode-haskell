@@ -31,7 +31,7 @@ combine =
    in foldl' (flip add) []
 
 addWhenOn :: Cube -> [Cube] -> [Cube]
-addWhenOn cube@(Cube True _ _ _ _ _ _) = (:) cube
+addWhenOn cube@(Cube True _ _ _ _ _ _) = (cube :)
 addWhenOn _ = id
 
 intersectAll :: Cube -> [Cube] -> [Cube]
