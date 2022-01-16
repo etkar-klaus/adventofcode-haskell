@@ -6,6 +6,8 @@ import qualified Day02.Part1
 import qualified Day02.Part2
 import qualified Day03.Part1
 import qualified Day03.Part2
+import qualified Day18.Part1
+import qualified Day18.Part2
 import qualified Day21.Part1
 import qualified Day21.Part2
 import qualified Day22.Part1
@@ -46,6 +48,7 @@ solversForDay :: Day -> ([String] -> Integer, [String] -> Integer)
 solversForDay Day01 = (Day01.Part1.solve, Day01.Part2.solve)
 solversForDay Day02 = (Day02.Part1.solve, Day02.Part2.solve)
 solversForDay Day03 = (Day03.Part1.solve, Day03.Part2.solve)
+solversForDay Day18 = (Day18.Part1.solve, Day18.Part2.solve)
 solversForDay Day21 = (Day21.Part1.solve, Day21.Part2.solve)
 solversForDay Day22 = (Day22.Part1.solve, Day22.Part2.solve)
 solversForDay _ = error "Not yet implemented"

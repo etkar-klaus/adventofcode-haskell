@@ -31,6 +31,9 @@ executable adventofcode
         Day02.Part2
         Day03.Part1
         Day03.Part2
+        Day18.Common
+        Day18.Part1
+        Day18.Part2
         Day21.Part1
         Day21.Part2
         Day22.Common
@@ -63,6 +66,9 @@ test-suite spec
         Day02.Part2
         Day03.Part1
         Day03.Part2
+        Day18.Common
+        Day18.Part1
+        Day18.Part2
         Day21.Part1
         Day21.Part2
         Day22.Common
