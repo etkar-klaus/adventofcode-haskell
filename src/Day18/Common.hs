@@ -6,7 +6,7 @@ import Data.Char (ord)
 data Token = Open | Close | Number Int
   deriving (Show)
 
-data CursorList = CursorList {_front :: [Token], _back :: [Token]}
+data CursorList = CursorList {_front, _back :: [Token]}
   deriving (Show)
 
 forward :: CursorList -> CursorList
@@ -34,7 +34,7 @@ reduce :: [Token] -> [Token]
 reduce list = maybe list reduce (explodeMaybe list <|> splitMaybe list)
 
 explodeMaybe :: [Token] -> Maybe [Token]
-explodeMaybe list = uncursor . explode <$> (findExplode . cursor) list
+explodeMaybe = fmap (uncursor . explode) . (findExplode . cursor)
 
 findExplode :: CursorList -> Maybe CursorList
 findExplode = find (0 :: Int)
@@ -51,7 +51,7 @@ explode (CursorList ((Number b) : (Number a) : _ : front) (_ : back)) = CursorLi
 explode _ = error "cannot explode"
 
 splitMaybe :: [Token] -> Maybe [Token]
-splitMaybe list = uncursor . split <$> (findSplit . cursor) list
+splitMaybe = fmap (uncursor . split) . (findSplit . cursor)
 
 findSplit :: CursorList -> Maybe CursorList
 findSplit (CursorList _ []) = Nothing
