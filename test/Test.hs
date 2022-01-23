@@ -32,6 +32,10 @@ main = do
               ~: [ "Part 1" ~: testPuzzle Day03 Part1 [4191876, 198],
                    "Part 2" ~: testPuzzle Day03 Part2 [3414905, 230]
                  ],
+            "Day 04"
+              ~: [ "Part 1" ~: testPuzzle Day04 Part1 [8580, 4512],
+                   "Part 2" ~: testPuzzle Day04 Part2 [9576, 1924]
+                 ],
             "Day 18"
               ~: [ "Part 1" ~: testPuzzle Day18 Part1 [3816, 4140],
                    "Part 2" ~: testPuzzle Day18 Part2 [4819, 3993]

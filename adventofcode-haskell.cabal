@@ -31,6 +31,9 @@ executable adventofcode
         Day02.Part2
         Day03.Part1
         Day03.Part2
+        Day04.Common
+        Day04.Part1
+        Day04.Part2
         Day18.Common
         Day18.Part1
         Day18.Part2
@@ -51,6 +54,7 @@ executable adventofcode
         containers,
         deepseq,
         regex-posix,
+        split,
         vector
     default-language: Haskell2010
 
@@ -66,6 +70,9 @@ test-suite spec
         Day02.Part2
         Day03.Part1
         Day03.Part2
+        Day04.Common
+        Day04.Part1
+        Day04.Part2
         Day18.Common
         Day18.Part1
         Day18.Part2
@@ -89,5 +96,6 @@ test-suite spec
         containers,
         deepseq,
         regex-posix,
+        split,
         vector
     default-language: Haskell2010

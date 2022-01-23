@@ -18,6 +18,7 @@ dependencies:
   - comfort-array
   - vector
   - regex-posix
+  - split
 
 executables:
   adventofcode:
