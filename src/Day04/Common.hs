@@ -9,10 +9,10 @@ data Bingo = Bingo {_marks :: Array Int Bool, _numbers :: [Int], _lastNum :: Int
   deriving (Show)
 
 valueOf :: ([Bingo] -> Bingo) -> [String] -> Integer
-valueOf selector = toInteger . value . apply selector
+valueOf select = toInteger . value . select . play
 
-apply :: ([Bingo] -> Bingo) -> [String] -> Bingo
-apply selector input = ((selector .) . markRepeat) (parseNumbers $ head input) (parseBingos input)
+play :: [String] -> [Bingo]
+play input = markRepeat (parseNumbers $ head input) (parseBingos input)
 
 bingo :: [[Int]] -> Bingo
 bingo nums = Bingo (listArray (0, 24) $ repeat False) (concat nums) (-1)
